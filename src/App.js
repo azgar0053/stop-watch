@@ -40,8 +40,8 @@ function App() {
     <div className="App">
       <h1>Stopwatch</h1>
       <p>Time: {timer(count)}</p>
-      <button onClick={countStart}>{timeControl?'Stop':'start'}</button>
-      <button onClick={resetTimer}>reset</button>
+      <button onClick={countStart}>{timeControl?'Stop':'Start'}</button>
+      <button onClick={resetTimer}>Reset</button>
     </div>
   );
 }
