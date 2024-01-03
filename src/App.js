@@ -1,23 +1,47 @@
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 
 function App() {
+  const [timeControl, setTimeControl]= useState(false)
+  const [count, setCount] = useState(0);
+
+
+  const countStart=()=>{ 
+    setTimeControl(()=>
+    !timeControl)
+  }
+
+ 
+
+  const timer=(count)=>{
+    const mins = Math.floor(count/60);
+    count %=60;
+    return `${mins}:${count<10?"0":""}${count}`
+  }
+
+  useEffect(()=>{
+    let timerId = setInterval(() => {
+      if(timeControl){
+      setCount((prev)=> prev+1)
+      }
+    }, 1000);
+    return ()=>{
+      clearInterval(timerId)
+    }
+  },[timeControl, count])
+  
+  const resetTimer=()=>{
+    setTimeControl(false);
+    setCount(0)
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Stopwatch</h1>
+      <p>Time: {timer(count)}</p>
+      <button onClick={countStart}>{timeControl?'Stop':'start'}</button>
+      <button onClick={resetTimer}>reset</button>
     </div>
   );
 }
